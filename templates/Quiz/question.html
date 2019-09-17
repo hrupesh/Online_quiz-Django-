@@ -1,0 +1,27 @@
+<!-- {{ question }} -->
+<br>
+<br>
+<form method="POST" action="questions/submit_query/">
+    {% csrf_token %}
+<!-- {% for questn in question %}
+    {{ questn }}<br>
+    {% for j in questn.choice_set.all %}
+    <input type="radio" name="{{ questn }}"> {{ j.choice_text }} <br>
+    {% endfor %}
+
+    <br>
+{% endfor %} -->
+    {% for questn in question %}
+        <p><strong>{{ questn.id }} : {{ questn.question_text }}</strong></p>
+        <input type="radio" name="{{ questn.question_text }}" value="{{ questn.choice_text1 }}"> {{ questn.choice_text1 }}<br>
+        <input type="radio" name="{{ questn.question_text }}" value="{{ questn.choice_text2 }}"> {{ questn.choice_text2 }}<br>
+        <input type="radio" name="{{ questn.question_text }}" value="{{ questn.choice_text3 }}"> {{ questn.choice_text3 }}<br>
+        <input type="radio" name="{{ questn.question_text }}" value="{{ questn.choice_text4 }}"> {{ questn.choice_text4 }}<br>
+    {% endfor %}
+    
+    <input type="submit" value="Submit">
+</form>
+
+
+<br>
+{{ choice }}
