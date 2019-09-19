@@ -1,0 +1,44 @@
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1 display-4 text-center ml-auto mr-auto">Celebal Technologies</span>
+    </nav>
+<form method="POST" action="/Student_form/">
+  {% csrf_token %}
+    <div class="container">
+      <div class="form-group col-md-12">
+        <!-- <label for="text">College Registration Number: </label>
+        <input type="text" class="form-control" name="C_R_Number" placeholder="******"> -->
+
+        <label for="text">First Name: </label>
+        <input type="text" class="form-control" name="FName" id="inputEmail4" placeholder="First Name">
+
+        <label for="text">Last Name: </label>
+        <input type="text" class="form-control" name="LName" id="inputEmail4" placeholder="Last Name">
+      
+        <label for="Number">Graduation Year:</label>
+        <input type="integer" class="form-control" name="GYear" id="inputPassword4" placeholder="G2020">
+   
+        <label for="text">Branch: </label>
+        <input type="text" class="form-control" name="Branch" id="inputAddress" placeholder="Computer science">
+
+        <label for="text">Course: </label>
+        <input type="text" class="form-control" name="Course" id="inputAddress" placeholder="B-tech">
+
+        <label for="inputEmail4">Email: </label>
+        <input type="email" class="form-control" name="Email" id="inputAddress" placeholder="xyz@gmail.com">
+
+        <label for="Number">Phone Number: </label>
+        <input type="number" class="form-control" name="PNumber" id="inputAddress" placeholder="0987654321">
+    
+        <button type="submit" class="mr-auto btn btn-primary">Register</button>
+      </div>
+    </div>
+</form>
+</body>

@@ -9,6 +9,10 @@ admin.site.register(models.userprofile)
 
 admin.site.register(models.Tag)
 
+admin.site.register(models.Student)
+
+admin.site.register(models.Student_individual_test_details)
+
 
 # class Question(models.Model):
 #     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
