@@ -17,46 +17,39 @@ def index(request):
             password = request.POST['password']
             print(registration_number)
             print(password)
-            # password = hashlib.sha256(password.encode())
-            # password = password.hexdigest()
+                # password = hashlib.sha256(password.encode())
+                # password = password.hexdigest()
 
             try:
                 print('try in')
                 user = userprofile.objects.get(registration_number = registration_number)
                 print(user)
                 passwordd = user.password
-                print(user.password)
+                print(user.password)              
             
+
+                if password == passwordd :
+                    #user = authenticate(username = username, password = password)
+                    userr = userprofile.objects.get(registration_number = registration_number, password = passwordd)
+                else:
+                    print("password not matched")
+                    
+
+                if userr:
+                    print(userr)
+                    
+                    request.session['registration_id'] = userr.registration_number
+                    
+                    request.session['session_id'] = request.session.session_key
+                    
+                    return HttpResponseRedirect(reverse('student_form'))
+                
+                else:
+                    print('in else')
+                    context['error'] = "Error in Connection"
+                    return render(request, 'Quiz/index.html', context)
             except:
-                print('error')
-
-            #passwd = check_password(password, passwordd)
-            #print (passwd)
-
-
-            if password == passwordd :
-                #user = authenticate(username = username, password = password)
-                userr = userprofile.objects.get(registration_number = registration_number, password = passwordd)
-            else:
-                print("password not matched")
-                
-
-            if userr:
-                print(userr)
-                #return HttpResponse(user.id)
-                request.session['registration_id'] = userr.registration_number
-                print (user.id)
-                request.session['session_id'] = request.session.session_key
-                new_id = user.id
-                #user.save()
-                print(new_id)
-                
-
-                return HttpResponseRedirect(reverse('student_form'))
-            else:
-                print('in else')
-                context['error'] = "Error in Connection"
-                return render(request, 'Quiz/index.html', context)
+                return HttpResponse("Go Back Something wents wrong")
 
 
         else:
@@ -67,43 +60,49 @@ def index(request):
 
 
 def student_form(request):
-    request.session.set_expiry(300)
-    try:
+        request.session.set_expiry(300)
+    #try:
         print(request.session.session_key)
         new_id = request.session['registration_id']
         user_id = request.session['session_id']
         if user_id:
-            try:
+            #try:
                 if request.method == 'POST':
                     print('post')
                     # #con = {}
-                    student_detail = Student(College_Registration_Number = new_id)
-                    #student_detail.College_Registration_Number = request.POST[new_id]
-                    student_detail.First_Name = request.POST['FName']
-                    student_detail.Last_Name = request.POST['LName']
-                    student_detail.Graduation_Year = request.POST['GYear']
-                    student_detail.Branch = request.POST['Branch']
-                    student_detail.Course = request.POST['Course']
-                    student_detail.Email = request.POST['Email']
-                    student_detail.Phone_Number = request.POST['PNumber']
-                    student_detail.save()
-                    # print(registration_number)
+                    student_detail = Student.objects.get(College_Registration_Number = new_id)
+                    
+                    if student_detail.Login_Count == 1:
+                        return HttpResponseRedirect(reverse('index'))
+                    
+                    else:
+                        #student_detail.College_Registration_Number = request.POST[new_id]
+                        student_detail.First_Name = request.POST['FName']
+                        student_detail.Last_Name = request.POST['LName']
+                        student_detail.Graduation_Year = request.POST['GYear']
+                        student_detail.Branch = request.POST['Branch']
+                        student_detail.Course = request.POST['Course']
+                        student_detail.Email = request.POST['Email']
+                        student_detail.Phone_Number = request.POST['PNumber']
+                        student_detail.Login_Count = 1
+                        student_detail.save()
+                        # print(registration_number)
 
-                    # student_form = student_form()
-                    return HttpResponseRedirect(reverse('show_questions'))
+                        # student_form = student_form()
+                        return HttpResponseRedirect(reverse('show_questions'))
 
                 else: 
                     print('else')   
                     return render(request , "Quiz/student_form.html")
-            except:
-                print('except')   
-                return render(request , "Quiz/student_form.html")
+            # except:
+            #     print('except')   
+            #     return render(request , "Quiz/student_form.html")
         else:
             return render(request , "Quiz/student_form.html")
 
-    except:
-        #del request.session['session_id']
-        return render(request , "Quiz/index.html")        
+    # except:
+    #     return HttpResponseRedirect(reverse('index'))
+                
 
 
 
@@ -129,7 +128,7 @@ def randomPassword():
 
 def update_password(request):
     a = randomPassword()
-    s = ['hudavf9' , 'sad7zvzta8g' , '9ddsfwa8wygucs']
+    s = ['199u9' , 'cfdsg' , 'vf9oiufwfs']
     Password = []
     # for i in s:
     length = len(s)
@@ -155,8 +154,6 @@ def update_password(request):
     }
     
 
-    print(result['registration_number'][0])
-    print(result['password'][0])
 
     print(len(s))
     length = len(s)
@@ -167,7 +164,12 @@ def update_password(request):
         user.password = result['password'][i]
         user.save()
         print(user)
-
+        student_detail = Student()
+        if student_detail:
+            student_detail.College_Registration_Number = result['registration_number'][i]
+            student_detail.Password = result['password'][i]
+            student_detail.save()
+            print(student_detail)
 
     return HttpResponse(a)
 
@@ -181,16 +183,20 @@ def show_questions(request):
         new_id = request.session['registration_id']
         user_id = request.session['session_id']
         if user_id:
-            question = Question.objects.all()   
-            #choice = Choice.objects.all()
-            context={
-                "question" : question,
-                #"choice" : choice
-            }
-            return render(request , 'Quiz/question.html' , context)
+            try:
+                question = Question.objects.all()   
+                #choice = Choice.objects.all()
+                context={
+                    "question" : question,
+                    #"choice" : choice
+                }
+                return render(request , 'Quiz/question.html' , context)
+            except:
+                return render(request , 'Quiz/question.html' , context)
+        else:
+            return render(request , 'Quiz/question.html')
     except:
-        return render(request , 'Quiz/index.html' , context)
-
+        return HttpResponseRedirect(reverse('index'))
 
 
 
@@ -231,10 +237,12 @@ def submit_query(request):
                 for i in result:
                     print(i)
                     Questionn = Question.objects.get(question_text=i)
+                    
                     for j in choice:
                         if Questionn.correct_option == j:
                             print('corrected')
                             number +=1
+                            
                         else:
                             print('incorrect')
                             number +=0
@@ -242,35 +250,16 @@ def submit_query(request):
                     print(number)
                     student_form.Score = number
                     student_form.save()
-
+                    #del request.session['session_id']
+                
+                del request.session['registration_id']
+                
                 return HttpResponse("Thanks For Your Submission ")
 
             except:
-                return render(request , 'Quiz/question.html' , context)
+                del request.session['session_id']
+                del request.session['registration_id']
+                return render(request , 'Quiz/index.html')
 
     except:
-        return render(request , 'Quiz/index.html' , context)
-        #     return HttpResponse(Questionn)
-        #     # for questn in Questionn:
-        #         if questn.correct_option == i:
-        #             print('corrected')
-
-            
-        #     print(Questionn)
-        #     i = request.POST[i]
-        #     print(i)
-
-        # for count in request:
-        #     #print(i)
-        #     ques
-        #     #print(count)
-            
-    # if question_id == None:
-    #     return HttpResponse(Question.objects.all())
-    # return HttpResponse(Question.objects.get(id = question_id))
-
-
-# def show_tags(request, tag_id=None):
-#     if tag_id == None:
-#         return HttpResponse(Tag.objects.all())
-#     return HttpResponse(Tag.objects.get(id = tag_id))
+        return HttpResponseRedirect(reverse('index'))

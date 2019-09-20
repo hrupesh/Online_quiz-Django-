@@ -1,16 +1,14 @@
 <!-- {{ question }} -->
-<br>
-<br>
-<form method="POST" action="questions/submit_query/">
+<!-- <form method="POST" action="questions/submit_query/">
     {% csrf_token %}
-<!-- {% for questn in question %}
+{% for questn in question %}
     {{ questn }}<br>
     {% for j in questn.choice_set.all %}
     <input type="radio" name="{{ questn }}"> {{ j.choice_text }} <br>
     {% endfor %}
 
     <br>
-{% endfor %} -->
+{% endfor %}
     {% for questn in question %}
         <p><strong>{{ questn.id }} : {{ questn.question_text }}</strong></p>
         <input type="radio" name="{{ questn.question_text }}" value="{{ questn.choice_text1 }}"> {{ questn.choice_text1 }}<br>
@@ -20,8 +18,148 @@
     {% endfor %}
     
     <input type="submit" value="Submit">
-</form>
+</form> -->
 
 
-<br>
-{{ choice }}
+
+<html>
+<head>
+    <title>Online Test</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1 display-4 text-center ml-auto mr-auto">Celebal Technologies</span>
+    </nav>
+
+    <div class="col-6 jumbotron mr-auto ml-auto" style="margin-top:7.5%;">
+        <div class="container">
+                <p id="demo" class="text-center"></p>
+                <script>
+                                        
+                            var countDownDate = new Date().getTime()+5400000;
+                            var today = new Date();
+                            var time = today.getHours()+1 + ":" + today.getMinutes() + ":" + today.getSeconds();
+                            //var countDownDate = time;
+                    // Update the count down every 1 second
+                    var x = setInterval(function() {
+                    // Get today's date and time
+                    var now = new Date().getTime();
+                        
+                    // Find the distance between now and the count down date
+                    var distance = countDownDate - now;
+                        
+                    // Time calculations for days, hours, minutes and seconds
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        
+                    // Output the result in an element with id="demo"
+                    document.getElementById("demo").innerHTML = "Time left : "+ hours + "h "
+                    + minutes + "m " + seconds + "s ";
+                        
+                    // If the count down is over, write some text 
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("demo").innerHTML = "EXPIRED";
+                    }
+                    }, 1000);
+                </script>
+            <form method="POST" action="questions/submit_query/">
+            {% csrf_token %}
+            {% for questn in question %}
+            <div class="form-group mySlides " id="q1" >
+                <p><strong>{{ questn.id }} : {{ questn.question_text }}</strong></p>
+                <input type="radio" name="{{ questn.question_text }}" value="{{ questn.choice_text1 }}"> {{ questn.choice_text1 }}<br>
+                <input type="radio" name="{{ questn.question_text }}" value="{{ questn.choice_text2 }}"> {{ questn.choice_text2 }}<br>
+                <input type="radio" name="{{ questn.question_text }}" value="{{ questn.choice_text3 }}"> {{ questn.choice_text3 }}<br>
+                <input type="radio" name="{{ questn.question_text }}" value="{{ questn.choice_text4 }}"> {{ questn.choice_text4 }}<br>
+                <div class="container mt-4">
+                    <button class="btn btn-outline-danger " type="button" id="prevbtn" onclick="plusSlides(-1)" > Previous </button>
+                    <button class="btn btn-outline-success float-right mr-4" type="button" id="nextbtn" onclick="plusSlides(1)"  > Next </button>
+                    <input type="submit" style="display: none" id="submitbtn" value="Submit">
+                </div>
+            </div>
+            {% endfor %}
+            </form>
+            <!-- <div class="form-group mySlides " id="q1" >
+                <h4> Q1. Hello this is queaisfhosdf sdjfosadfoijp ?</h4>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+            </div>
+            <div class="form-group mySlides " id="q2" style="display:none;" >
+                <h4> Q2. Hello this is queaisfhosdf sdjfosadfoijp ?</h4>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+            </div>
+            <div class="form-group mySlides " id="q3" style="display:none;" >
+                <h4> Q3. Hello this is queaisfhosdf sdjfosadfoijp ?</h4>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+            </div>
+            <div class="form-group mySlides " id="q3" style="display:none;" >
+                <h4> Q4. Hello this is queaisfhosdf sdjfosadfoijp ?</h4>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+            </div>
+            <div class="form-group mySlides " id="q3" style="display:none;" >
+                <h4> Q5. Hello this is queaisfhosdf sdjfosadfoijp ?</h4>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+                <input type="radio"  class="mt-2 mb-2 ml-4" id="option"> Options <br>
+            </div> -->
+        </div>
+        <!-- <div class="container mt-4">
+            <button class="btn btn-outline-danger " id="prevbtn" onclick="plusSlides(-1)" > Previous </button>
+            <button class="btn btn-outline-success float-right mr-4" id="nextbtn" onclick="plusSlides(1)"  > Next </button>
+        </div> -->
+    </div>
+    <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+        function plusSlides(n) {
+        showSlides(slideIndex += n);
+        }
+        function currentSlide(n) {
+        showSlides(slideIndex = n);
+        }
+        function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}    
+        if (n < 1) {slideIndex = slides.length}
+        var submitbtn = document.getElementById("submitbtn")
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+            console.log(i)
+            if (i == 0){
+                submitbtn.style.display = "block";
+            }  
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+        }
+    </script>
+      <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+</body>
+</html>
