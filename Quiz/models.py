@@ -9,11 +9,11 @@ class userprofile(models.Model):
         return str(self.registration_number)
 
 
-class Tag(models.Model):
-    tag_name = models.CharField(max_length=50)
+# class Tag(models.Model):
+#     tag_name = models.CharField(max_length=50)
 
-    def __str__(self):
-        return self.tag_name
+#     def __str__(self):
+#         return self.tag_name
 
 class Student(models.Model):
     College_Registration_Number = models.CharField(unique=True , max_length=15)
@@ -33,7 +33,7 @@ class Student(models.Model):
 
 
 class Question(models.Model):
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    tag_name = models.CharField(max_length=50)
     question_text = models.CharField(max_length=1000)
     choice_text1 = models.CharField(max_length=200)
     choice_text2 = models.CharField(max_length=200)
@@ -48,7 +48,6 @@ class Question(models.Model):
 class Student_individual_test_details(models.Model):
     College_Registration_Number = models.ForeignKey(Student, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     selected_choice = models.CharField(max_length=250)
     correct_option = models.CharField(max_length=250)
 

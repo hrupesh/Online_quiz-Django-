@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Quiz.apps.QuizConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,10 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 
+
+
+
+
     # 'default': {
     #     'ENGINE': 'sql_server.pyodbc',
     #     'NAME': 'OnlineQuiz',
@@ -93,6 +98,12 @@ DATABASES = {
     #         'driver': 'ODBC Driver 17 for SQL Server',
     #     },
     # },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
 }
 
 

@@ -7,7 +7,7 @@ admin.site.register(models.Question)
 
 admin.site.register(models.userprofile)
 
-admin.site.register(models.Tag)
+#admin.site.register(models.Tag)
 
 admin.site.register(models.Student)
 

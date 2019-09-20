@@ -1,22 +1,11 @@
-[
-    {
-        "pk": "2",
-        "model": "Quiz.Tag",
-        "fields": {
-        "tag_name": "programming"
-        }
-    },
-    {
-        "pk": "2",
-        "model": "Quiz.Question",
-        "fields": {
-            "tag": 1,
-            "question_text": "dog af f fe fqe ef ew f ew ef ef ",
-            "choice_text1": "vdsvsdvsdsd",
-            "choice_text2": "rffewf",
-            "choice_text3": "oijhg",
-            "choice_text4": "098yg",
-            "correct_option": "vdsvsdvsdsd"
-        }
-    } 
-]
+
+{
+    "tag_name": "pytn",
+    "question_text": "djhvrwbvsghog .jhkjaflkjh",
+    "choice_text1": "vdsvsdvsdsd",
+    "choice_text2": "rffewf",
+    "choice_text3": "oijhg",
+    "choice_text4": "098yg",
+    "correct_option": "098yg"
+
+}

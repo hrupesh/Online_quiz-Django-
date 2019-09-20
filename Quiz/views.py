@@ -1,6 +1,6 @@
 from django.shortcuts import render , reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from Quiz.models import Tag, Question , userprofile , Student
+from Quiz.models import Question , userprofile , Student
 import string
 import random
 
@@ -128,25 +128,22 @@ def randomPassword():
 
 def update_password(request):
     a = randomPassword()
-    s = ['199u9' , 'cfdsg' , 'vf9oiufwfs']
+    s = ['199ufewewf9' , 'cffewvdsg' , 'oiufwfs']
     Password = []
     # for i in s:
     length = len(s)
     print(len(s))
     print(length)
 
+    # if request.method == "POST":
+    #     passwd = request.POST["image"]
+    #     pwd = json.load(passwd)
+    #     print(pwd)
+    
     for i in s:
         password = randomPassword()
         Password.append(password)
         
-    print(Password)
-
-    
-    # for i in s:
-    #     user.registration_number = s[i]
-    #     for i in Password:
-    #         user.password = Password[i]
-    #     user.save()
 
     result = {
         'registration_number' : s,
@@ -201,12 +198,12 @@ def show_questions(request):
 
 
 def submit_query(request):
-    request.session.set_expiry(300)
-    try:
+        request.session.set_expiry(300)
+    #try:
         new_id = request.session['registration_id']
         user_id = request.session['session_id']
         if user_id:
-            try:
+            #try:
                 result = []
                 choice = []
                 number = 0
@@ -256,10 +253,60 @@ def submit_query(request):
                 
                 return HttpResponse("Thanks For Your Submission ")
 
-            except:
-                del request.session['session_id']
-                del request.session['registration_id']
-                return render(request , 'Quiz/index.html')
+    #         except:
+    #             del request.session['session_id']
+    #             del request.session['registration_id']
+    #             return HttpResponseRedirect(reverse('index'))
 
-    except:
-        return HttpResponseRedirect(reverse('index'))
+    # except:
+    #     return HttpResponseRedirect(reverse('index'))
+
+
+
+
+
+
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import viewsets, serializers
+from .serializers import QuestionSerializer
+#from rest_framework.parsers import MultiPartParser, FormParser
+
+
+
+
+# @api_view(['GET', 'POST'])
+# def questions_view(request):
+#     if request.method == 'GET':
+#         return HttpResponse("not Implemented")
+#     elif request.method == 'POST':
+#         tag_name = request.data['tag_name']
+#         question_text = request.data['question_text']
+#         choice_text1 = request.data['choice_text1']
+#         choice_text2 = request.data['choice_text2']
+#         choice_text3 = request.data['choice_text3']
+#         choice_text4 = request.data['choice_text4']
+#         correct_option = request.data['correct_option']
+
+#         #pub_date = datetime.strptime(request.data['pub_date'], '%Y-%m-%d')
+#         Question.objects.create(tag_name=tag_name, question_text=question_text, choice_text1=choice_text1, choice_text1=choice_text1, choice_text2=choice_text2, choice_text3=choice_text3, choice_text4=choice_text4, correct_option=correct_option)
+#         return HttpResponse("Question created", status=201)
+
+
+class questions_view(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    print(serializer_class.data)
+
+
+#def ll(request):
+#     print('ll')
+#     if request.method == 'POST':
+#         print('post') 
+#         print(request.FILES)
+#         img = request.FILES('image')
+#         print(img)
+    
